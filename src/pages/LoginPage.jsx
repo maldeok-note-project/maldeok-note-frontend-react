@@ -1,6 +1,6 @@
 // ログイン
 const LoginPage = () => {
-  return <div>ログイン</div>;
+  return <div>ろぐいん</div>;
 };
 
 export default LoginPage;
