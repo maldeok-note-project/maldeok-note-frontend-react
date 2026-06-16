@@ -26,21 +26,21 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
 
         {/* カテゴリ */}
-        <Route path="/categiries" element={<CategoryListPage />} />
-        <Route path="/categiries/create" element={<CategoryCreatePage />} />
-        <Route path="/categiries/:id/edit" element={<CategoryEditPage />} />
+        <Route path="/categories" element={<CategoryListPage />} />
+        <Route path="/categories/create" element={<CategoryCreatePage />} />
+        <Route path="/categories/:id/edit" element={<CategoryEditPage />} />
 
-        {/* 表示 */}
-        <Route path="/expressions" element={<ExpressionListPagePage />} />
+        {/* 表現 */}
+        <Route path="/expressions" element={<ExpressionListPage />} />
         <Route path="/expressions/:id" element={<ExpressionDetailPage />} />
         <Route path="/expressions/create" element={<ExpressionCreatePage />} />
         <Route path="/expressions/:id/edit" element={<ExpressionEditPage />} />
 
         {/* お気に入り */}
-        <Route path="/favorite" element={<FavoriteListPage />} />
+        <Route path="/favorites" element={<FavoriteListPage />} />
 
         {/* バッジ */}
-        <Route path="/badge" element={<BadgeListPage />} />
+        <Route path="/badges" element={<BadgeListPage />} />
       </Routes>
     </BrowserRouter>
   );
