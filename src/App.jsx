@@ -15,6 +15,7 @@ import FavoriteListPage from "./pages/FavoriteListPage";
 import BadgeListPage from "./pages/BadgeListPage";
 
 import Header from "./components/Header";
+import AuthGuard from "./components/AuthGuard";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Header />
 
       <Routes>
+        {/* ログイン不要なページ */}
         {/* トップページ */}
         <Route path="/" element={<TopPage />} />
 
@@ -30,22 +32,86 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
 
+        {/* 要ログインページ */}
         {/* カテゴリ */}
-        <Route path="/categories" element={<CategoryListPage />} />
-        <Route path="/categories/create" element={<CategoryCreatePage />} />
-        <Route path="/categories/:id/edit" element={<CategoryEditPage />} />
+        <Route
+          path="/categories"
+          element={
+            <AuthGuard>
+              <CategoryListPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/categories/create"
+          element={
+            <AuthGuard>
+              <CategoryCreatePage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/categories/:id/edit"
+          element={
+            <AuthGuard>
+              <CategoryEditPage />
+            </AuthGuard>
+          }
+        />
 
         {/* 表現 */}
-        <Route path="/expressions" element={<ExpressionListPage />} />
-        <Route path="/expressions/:id" element={<ExpressionDetailPage />} />
-        <Route path="/expressions/create" element={<ExpressionCreatePage />} />
-        <Route path="/expressions/:id/edit" element={<ExpressionEditPage />} />
+        <Route
+          path="/expressions"
+          element={
+            <AuthGuard>
+              <ExpressionListPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/expressions/:id"
+          element={
+            <AuthGuard>
+              <ExpressionDetailPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/expressions/create"
+          element={
+            <AuthGuard>
+              <ExpressionCreatePage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="/expressions/:id/edit"
+          element={
+            <AuthGuard>
+              <ExpressionEditPage />
+            </AuthGuard>
+          }
+        />
 
         {/* お気に入り */}
-        <Route path="/favorites" element={<FavoriteListPage />} />
+        <Route
+          path="/favorites"
+          element={
+            <AuthGuard>
+              <FavoriteListPage />
+            </AuthGuard>
+          }
+        />
 
         {/* バッジ */}
-        <Route path="/badges" element={<BadgeListPage />} />
+        <Route
+          path="/badges"
+          element={
+            <AuthGuard>
+              <BadgeListPage />
+            </AuthGuard>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
