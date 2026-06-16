@@ -90,7 +90,7 @@ const RegidterPage = () => {
         </div>
 
         <div>
-          <label>メールアドレス</label>
+          <label>Email</label>
           <input
             type="email"
             name="email"
