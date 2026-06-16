@@ -1,6 +1,6 @@
 // 表現編集
 const ExpressionEditPage = () => {
-  return <div>修正！！</div>;
+  return <div>へんしゅう！！</div>;
 };
 
 export default ExpressionEditPage;

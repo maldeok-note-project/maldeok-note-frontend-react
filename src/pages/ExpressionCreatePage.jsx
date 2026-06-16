@@ -1,6 +1,6 @@
 // 表現登録
 const ExpressionCreatePage = () => {
-  return <div>追加！</div>;
+  return <div>さくせい！</div>;
 };
 
 export default ExpressionCreatePage;
