@@ -84,7 +84,7 @@ const LoginPage = () => {
           <input
             type="password"
             name="password"
-            value={form.emal}
+            value={form.password}
             onChange={handleChange}
           />
           {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
