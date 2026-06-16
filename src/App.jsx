@@ -14,9 +14,14 @@ import ExpressionEditPage from "./pages/ExpressionEditPage";
 import FavoriteListPage from "./pages/FavoriteListPage";
 import BadgeListPage from "./pages/BadgeListPage";
 
+import Header from "./components/Header";
+
 function App() {
   return (
     <BrowserRouter>
+      {/* 全ページ共通ヘッダー */}
+      <Header />
+
       <Routes>
         {/* トップページ */}
         <Route path="/" element={<TopPage />} />
