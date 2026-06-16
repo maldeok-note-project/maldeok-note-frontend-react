@@ -44,7 +44,7 @@ const LoginPage = () => {
       navigate("/expressions");
     } catch (error) {
       // バックエンドからエラーレスポンス処理
-      if (error.response?.data?.error) {
+      if (errors.response?.data?.error) {
         const rawErrors = error.response.data.errors;
         const formatted = {};
         Object.keys(rawErrors).forEach((key) => {
@@ -64,7 +64,7 @@ const LoginPage = () => {
       <h1>ログイン</h1>
 
       {/* 全体エラー */}
-      {errors.general && <p style={{ color: "red" }}>{error.general}</p>}
+      {errors.general && <p style={{ color: "red" }}>{errors.general}</p>}
 
       {/* フォーム */}
       <form onSubmit={handleSubmit}>
@@ -76,7 +76,7 @@ const LoginPage = () => {
             value={form.email}
             onChange={handleChange}
           />
-          {errors.email && <p style={{ color: "red" }}>{error.email}</p>}
+          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         </div>
 
         <div>
