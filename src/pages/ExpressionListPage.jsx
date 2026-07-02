@@ -1,6 +1,96 @@
+import { useEffect, useState } from "react";
+import apiClient from "../api/client";
+
+// 日付を読める形にする
+const formatHeardAt = (isoDateString) => {
+  const date = new Date(isoDateString);
+  return date.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
 // 表現一覧
 const ExpressionListPage = () => {
-  return <div>言葉の記録帳</div>;
+  // 表現を入れる箱
+  const [expressions, setExpressions] = useState([]);
+
+  // 「読み込み中...」の表示の箱
+  const [loading, setLoading] = useState(true);
+
+  // エラー時の箱
+  const [error, setError] = useState(null);
+
+  // useEffect：画面が最初に表示されたタイミングで一度だけ実行される
+  useEffect(() => {
+    const fetchExpression = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // api呼び出し
+        const response = await apiClient.get("/expressions");
+
+        // バックエンドのレスポンス形式が
+        // { data: [...] } でも [...] そのままでも対応
+        const list = response.data.data ?? response.data;
+
+        setExpressions(list);
+      } catch (err) {
+        console.error("表現一覧の取得に失敗しました。", err);
+        setError("表現の取得に失敗しました。時間をおいて再度お試しください。");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExpression();
+  }, []);
+
+  // ブラウザ表示部分分岐
+  if (loading) {
+    return <div>読み込み中...</div>;
+  }
+  if (error) {
+    return <div>{error}</div>;
+  }
+  if (expressions.length === 0) {
+    return (
+      <div>まだ登録された表現がありません。最初の一言を残してみましょう！</div>
+    );
+  }
+
+  return (
+    <div className="expression-list-page">
+      <h1>言葉の記録帳</h1>
+
+      <div className="expression-card-list">
+        {expressions.map((expression) => (
+          <div className="expression-card" key={expression.id}>
+            {/* 表現 */}
+            <p className="expression-phrase">{expression.phrase}</p>
+
+            {/* 意味 */}
+            <p className="expression-meaning">{expression.meaning}</p>
+
+            {/* 誰が言ったか */}
+            <p className="expression-speaker-name">{expression.speaker_name}</p>
+
+            {/* 日付 */}
+            <p className="expression-heard-at">
+              {formatHeardAt(expression.heard_at)}
+            </p>
+
+            {/* お気に入り（表示のみ） */}
+            <p className="expression-favorite">
+              {expression.is_favorite ? "❤ お気に入り" : "♡"}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default ExpressionListPage;
