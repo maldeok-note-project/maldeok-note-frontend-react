@@ -7,7 +7,7 @@ import { apiClient } from "../api/client";
 const formatHeardAt = (isoDateString) => {
   const date = new Date(isoDateString);
   return date.toLocalDateString("ja-JP", {
-    // numeric:
+    // numeric: JSに用意されている日付フォーマットのオプション
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -18,18 +18,21 @@ const formatHeardAt = (isoDateString) => {
 const ExpressionDetailPage = () => {
   // URLの「:id」部分取得
   const { id } = useParams();
+
+  // データを入れる箱たち
   const [expression, setExpression] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffectでAPIからデータ取得
+  // 画面が表示されたタイミング、もしくは id が変わったタイミングで実行
   useEffect(() => {
+    // async/await で非同期処理を実行するための関数を定義
     const fetchExpressionDetail = async () => {
       try {
         setLoading(true);
         setError(null);
 
-        // 1件取得
+        // 1件取得(するまで待つ)
         const response = await apiClient.get(`/expressions/${id}`);
         // 一覧ページと同じく { data: {...} } / {...} どちらの形式でも対応
         const detail = response.data.data ?? response.data;
@@ -45,7 +48,7 @@ const ExpressionDetailPage = () => {
         setLoading(false);
       }
     };
-
+    // 定義した関数を実行(呼び出し)
     fetchExpressionDetail();
     // idが変わったら（別の詳細ページに移動したら）再取得
   }, [id]);
@@ -63,7 +66,7 @@ const ExpressionDetailPage = () => {
 
   return (
     <div className="expression-detail-page">
-      <link to="/expressions">一覧に戻る</link>
+      <Link to="/expressions">一覧に戻る</Link>
 
       <h1 className="expression-phrase">{expression.phrase}</h1>
       <p className="expression-heard-at">
@@ -79,11 +82,12 @@ const ExpressionDetailPage = () => {
       <p className="expression-speaker-name">{expression.speaker_name}</p>
 
       {/* 場所 */}
+      {/* 「もし〜だったら表示する」Reactでよく使う短縮の書き方 */}
       {expression.place && (
         <p className="expression-place">📍{expression.place}</p>
       )}
 
-      {expression.note && <p className="expression-memo">{expression.memo}</p>}
+      {expression.memo && <p className="expression-memo">{expression.memo}</p>}
     </div>
   );
 };
