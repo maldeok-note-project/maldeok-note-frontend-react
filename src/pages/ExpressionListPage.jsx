@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient from "../api/client";
+import { Link } from "react-router-dom";
 
 // 日付を読める形にする
 const formatHeardAt = (isoDateString) => {
@@ -67,7 +68,11 @@ const ExpressionListPage = () => {
 
       <div className="expression-card-list">
         {expressions.map((expression) => (
-          <div className="expression-card" key={expression.id}>
+          <Link
+            to={`/expressions/${expression.id}`}
+            className="expression-card"
+            key={expression.id}
+          >
             {/* 表現 */}
             <p className="expression-phrase">{expression.phrase}</p>
 
@@ -86,7 +91,7 @@ const ExpressionListPage = () => {
             <p className="expression-favorite">
               {expression.is_favorite ? "❤ お気に入り" : "♡"}
             </p>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
