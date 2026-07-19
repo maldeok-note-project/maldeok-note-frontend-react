@@ -1,12 +1,12 @@
 // 表現詳細
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { apiClient } from "../api/client";
+import { useParams, Link } from "react-router-dom";
+import apiClient from "../api/client";
 
 // 日付
 const formatHeardAt = (isoDateString) => {
   const date = new Date(isoDateString);
-  return date.toLocalDateString("ja-JP", {
+  return date.toLocaleDateString("ja-JP", {
     // numeric: JSに用意されている日付フォーマットのオプション
     year: "numeric",
     month: "long",
