@@ -79,7 +79,11 @@ const ExpressionDetailPage = () => {
       </p>
 
       <p className="expression-meaning">{expression.meaning}</p>
-      <p className="expression-speaker-name">{expression.speaker_name}</p>
+
+      {/* カテゴリ名：話者名 */}
+      <p className="expression.speaker">
+        {expression.speaker_category?.name} : {expression.speaker_name}
+      </p>
 
       {/* 場所 */}
       {/* 「もし〜だったら表示する」Reactでよく使う短縮の書き方 */}
