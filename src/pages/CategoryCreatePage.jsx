@@ -1,7 +1,7 @@
 // カテゴリ作成
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../api/apiClient";
+import apiClient from "../api/client";
 
 // カテゴリ作成ページ
 const CategoryCreatePage = () => {
