@@ -26,10 +26,10 @@ const CategoryListPage = () => {
         setError(null);
 
         // api呼び出し
-        const response = await apiClient.get("/speaker_categories");
+        const response = await apiClient.get("/speaker-categories");
 
         // レスポンス対応
-        const list = response.data ?? response.data;
+        const list = response.data.data ?? response.data;
         setCategories(list);
       } catch (err) {
         console.error("カテゴリ一覧の取得に失敗しました。", err);
