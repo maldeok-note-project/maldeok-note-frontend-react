@@ -20,30 +20,56 @@ const CategoryListPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // api呼び出し
+      const response = await apiClient.get("/speaker-categories");
+
+      // レスポンス対応
+      const list = response.data.data ?? response.data;
+      setCategories(list);
+    } catch (err) {
+      console.error("カテゴリ一覧の取得に失敗しました。", err);
+      setError(
+        "カテゴリ一覧の取得に失敗しました。時間をおいて再度お試しください。",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        // api呼び出し
-        const response = await apiClient.get("/speaker-categories");
-
-        // レスポンス対応
-        const list = response.data.data ?? response.data;
-        setCategories(list);
-      } catch (err) {
-        console.error("カテゴリ一覧の取得に失敗しました。", err);
-        setError(
-          "カテゴリ一覧の取得に失敗しました。時間をおいて再度お試しください。",
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchCategories();
   }, []);
+
+  // カテゴリ削除
+  const handleDelete = async (categoryId) => {
+    // 確認ダイアログ
+    const confirmed = window.confirm("本当に削除しますか？");
+
+    // キャンセルされた場合は処理を中断
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await apiClient.delete(`/speaker-categories/${categoryId}`);
+      // 削除後にカテゴリ一覧を再取得
+      await fetchCategories();
+    } catch (err) {
+      console.error("カテゴリ削除に失敗しました。", err);
+
+      // 409エラーの場合は、削除できない旨を表示
+      if (err.response?.status === 409) {
+        alert(err.response.data.message);
+      } else {
+        alert("カテゴリ削除に失敗しました。時間をおいて再度お試しください。");
+      }
+    }
+  };
 
   // ブラウザ分岐
   if (loading) {
@@ -75,6 +101,7 @@ const CategoryListPage = () => {
               登録日: {formatCreatedAt(category.created_at)}
             </p>
             <Link to={`/categories/${category.id}/edit`}>編集</Link>
+            <button onClick={() => handleDelete(category.id)}>削除</button>
           </div>
         ))}
       </div>
