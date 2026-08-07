@@ -1,5 +1,6 @@
 // カテゴリ一覧
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import apiClient from "../api/client";
 
 // 登録日を読める形にする
@@ -73,6 +74,7 @@ const CategoryListPage = () => {
             <p className="category-created-at">
               登録日: {formatCreatedAt(category.created_at)}
             </p>
+            <Link to={`/categories/${category.id}/edit`}>編集</Link>
           </div>
         ))}
       </div>
