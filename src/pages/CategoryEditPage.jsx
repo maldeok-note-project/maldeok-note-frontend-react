@@ -1,7 +1,7 @@
 // カテゴリ編集
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import apiClient from "../apiClient";
+import apiClient from "../api/client";
 
 const CategoryEditPage = () => {
   // navigate: ページ遷移用の関数を取得
@@ -10,19 +10,34 @@ const CategoryEditPage = () => {
   // カテゴリIDを取得
   const { id } = useParams();
 
-  const [from, setFrom] = useState({
+  const [form, setForm] = useState({
     name: "",
   });
-  const [error, setError] = useState({});
+  const [errors, setErrors] = useState({});
   const [isFetching, setIsFetching] = useState(true);
   const [fetchError, setFetchError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // 一覧取得からカテゴリを探して反映
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await apiClient.get(`/categories/${id}`);
-        setForm({ name: response.data.name });
+        // カテゴリ情報を取得
+        const response = await apiClient.get(`/speaker-categories`);
+
+        // レスポンス
+        const categories = response.data.data;
+
+        // 文字列→数値に変換して比較
+        const category = categories.find((c) => c.id === Number(id));
+
+        if (!category) {
+          setFetchError(
+            "指定されたカテゴリが見つかりませんでした。削除されたか、アクセス権がない可能性があります。",
+          );
+          return;
+        }
+        setForm({ name: category.name });
       } catch (error) {
         setFetchError(
           "カテゴリの取得に失敗しました。一覧画面に戻ってやり直してください。",
@@ -35,24 +50,27 @@ const CategoryEditPage = () => {
     fetchCategory();
   }, [id]);
 
+  // フォームの入力値を更新
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  // フォーム送信時の処理
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setIsSubmitting(true);
-    setError({});
+    setErrors({});
 
     try {
-      await apiClient.put(`/categories/${id}`, {
-        name: form.name,
-      });
+      // バックエンドにカテゴリ更新リクエストを送信
+      await apiClient.patch(`/speaker-categories/${id}`, { name: form.name });
+
       // 更新成功時はカテゴリ一覧に遷移
       navigate("/categories");
     } catch (error) {
+      // 422エラーの場合はバリデーションエラーを表示
       if (error.response?.data?.errors) {
         const rawErrors = error.response.data.errors;
         const formattedErrors = {};
@@ -60,7 +78,9 @@ const CategoryEditPage = () => {
         Object.keys(rawErrors).forEach((key) => {
           formattedErrors[key] = rawErrors[key][0];
         });
-        setError(formattedErrors);
+        setErrors(formattedErrors);
+
+        // 409エラーの場合は競合エラーを表示
       } else if (error.response?.data?.message) {
         setErrors({ general: error.response.data.message });
       } else {
@@ -77,6 +97,7 @@ const CategoryEditPage = () => {
     return <p>読み込み中...</p>;
   }
 
+  // カテゴリが見つからなかった場合のエラーメッセージを表示
   if (fetchError) {
     return <p style={{ color: "red" }}>{fetchError}</p>;
   }
