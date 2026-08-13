@@ -9,7 +9,7 @@ const ExpressionCreatePage = () => {
 
   // フォーム内容
   const [form, setForm] = useState({
-    prease: "",
+    phrase: "",
     meaning: "",
     speaker_category_id: "",
     speaker_name: "",
@@ -137,7 +137,7 @@ const ExpressionCreatePage = () => {
       <form onSubmit={handleSubmit}>
         {/* 表現 */}
         <div>
-          <lavel>表現</lavel>
+          <label>表現</label>
           <input
             type="text"
             name="phrase"
@@ -150,7 +150,7 @@ const ExpressionCreatePage = () => {
 
         {/* 意味 */}
         <div>
-          <lavel>意味</lavel>
+          <label>意味</label>
           <input
             type="text"
             name="meaning"
@@ -163,7 +163,7 @@ const ExpressionCreatePage = () => {
 
         {/* カテゴリー */}
         <div>
-          <lavel>種類</lavel>
+          <label>種類</label>
           <select
             name="speaker_category_id"
             value={form.speaker_category_id}
