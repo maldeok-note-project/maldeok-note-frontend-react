@@ -60,7 +60,7 @@ const CategoryListPage = () => {
       // 削除後にカテゴリ一覧を再取得
       await fetchCategories();
     } catch (error) {
-      console.error("カテゴリ削除に失敗しました。", err);
+      console.error("カテゴリ削除に失敗しました。", error);
 
       // 409エラーの場合は、削除できない旨を表示
       if (error.response?.status === 409) {

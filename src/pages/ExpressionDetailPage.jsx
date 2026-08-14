@@ -92,6 +92,9 @@ const ExpressionDetailPage = () => {
       )}
 
       {expression.memo && <p className="expression-memo">{expression.memo}</p>}
+
+      {/* 編集・削除 */}
+      <Link to={`/expressions/${id}/edit`}>編集</Link>
     </div>
   );
 };

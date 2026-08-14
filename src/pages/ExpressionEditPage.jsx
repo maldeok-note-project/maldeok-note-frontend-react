@@ -84,7 +84,8 @@ const ExpressionEditPage = () => {
           is_favorite: data.is_favorite,
         });
       } catch (error) {
-        setExpressionError(
+        setExpressionError("表現の取得に失敗しました。", error);
+        console.error(
           "表現の取得に失敗しました。時間をおいて再度お試しください。",
           error,
         );
