@@ -4,7 +4,7 @@ import apiClient from "./client";
 
 // お気に入りON/OFF
 export const toggleFavorite = async (id) => {
-  const response = await apiClient.post(`/expressions/${id}/favorite`);
+  const response = await apiClient.patch(`/expressions/${id}/favorite`);
 
   // 更新後の表現
   return response.data.data ?? response.data;
