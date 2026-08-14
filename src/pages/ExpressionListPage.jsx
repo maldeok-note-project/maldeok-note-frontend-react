@@ -51,7 +51,6 @@ const ExpressionListPage = () => {
   // 削除処理
   const handleDelete = async (e, id) => {
     // 伝播防止
-    e.preventDefault();
     e.stopPropagation();
 
     // 確認ダイアログ
@@ -89,35 +88,38 @@ const ExpressionListPage = () => {
 
       <div className="expression-card-list">
         {expressions.map((expression) => (
-          <Link
-            to={`/expressions/${expression.id}`}
-            className="expression-card"
-            key={expression.id}
-          >
-            {/* 表現 */}
-            <p className="expression-phrase">{expression.phrase}</p>
+          <div className="expression-card" key={expression.id}>
+            <Link
+              to={`/expressions/${expression.id}`}
+              className="expression-card-link"
+            >
+              {/* 表現 */}
+              <p className="expression-phrase">{expression.phrase}</p>
 
-            {/* 意味 */}
-            <p className="expression-meaning">{expression.meaning}</p>
+              {/* 意味 */}
+              <p className="expression-meaning">{expression.meaning}</p>
 
-            {/* 誰が言ったか */}
-            <p className="expression-speaker-name">{expression.speaker_name}</p>
+              {/* 誰が言ったか */}
+              <p className="expression-speaker-name">
+                {expression.speaker_name}
+              </p>
 
-            {/* 日付 */}
-            <p className="expression-heard-at">
-              {formatHeardAt(expression.heard_at)}
-            </p>
+              {/* 日付 */}
+              <p className="expression-heard-at">
+                {formatHeardAt(expression.heard_at)}
+              </p>
 
-            {/* お気に入り（表示のみ） */}
-            <p className="expression-favorite">
-              {expression.is_favorite ? "❤ お気に入り" : "♡"}
-            </p>
+              {/* お気に入り（表示のみ） */}
+              <p className="expression-favorite">
+                {expression.is_favorite ? "❤ お気に入り" : "♡"}
+              </p>
+            </Link>
 
             {/* 削除ボタン */}
             <button onClick={(e) => handleDelete(e, expression.id)}>
               削除
             </button>
-          </Link>
+          </div>
         ))}
       </div>
     </div>
