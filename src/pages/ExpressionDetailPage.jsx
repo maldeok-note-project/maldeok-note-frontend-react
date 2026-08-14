@@ -91,11 +91,6 @@ const ExpressionDetailPage = () => {
         📅{formatHeardAt(expression.heard_at)}
       </p>
 
-      {/* お気に入り */}
-      <p className="expression-favorite">
-        {expression.is_favorite ? "❤" : "♡"}
-      </p>
-
       <p className="expression-meaning">{expression.meaning}</p>
 
       {/* カテゴリ名：話者名 */}
@@ -110,6 +105,11 @@ const ExpressionDetailPage = () => {
       )}
 
       {expression.memo && <p className="expression-memo">{expression.memo}</p>}
+
+      {/* お気に入り */}
+      <button className="expression-favorite">
+        {expression.is_favorite ? "❤" : "♡"}
+      </button>
 
       {/* 編集・削除 */}
       <Link to={`/expressions/${id}/edit`}>編集</Link>
