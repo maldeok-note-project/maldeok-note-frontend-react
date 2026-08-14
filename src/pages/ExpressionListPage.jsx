@@ -1,3 +1,4 @@
+// 表現一覧
 import { useEffect, useState } from "react";
 import apiClient from "../api/client";
 import { Link } from "react-router-dom";
@@ -12,7 +13,6 @@ const formatHeardAt = (isoDateString) => {
   });
 };
 
-// 表現一覧
 const ExpressionListPage = () => {
   // 表現を入れる箱
   const [expressions, setExpressions] = useState([]);
@@ -22,32 +22,53 @@ const ExpressionListPage = () => {
 
   // エラー時の箱
   const [error, setError] = useState(null);
+  const fetchExpression = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // api呼び出し
+      const response = await apiClient.get("/expressions");
+
+      // バックエンドのレスポンス形式が
+      // { data: [...] } でも [...] そのままでも対応
+      const list = response.data.data ?? response.data;
+
+      setExpressions(list);
+    } catch (error) {
+      console.error("表現一覧の取得に失敗しました。", error);
+      setError("表現の取得に失敗しました。時間をおいて再度お試しください。");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // useEffect：画面が最初に表示されたタイミングで一度だけ実行される
   useEffect(() => {
-    const fetchExpression = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        // api呼び出し
-        const response = await apiClient.get("/expressions");
-
-        // バックエンドのレスポンス形式が
-        // { data: [...] } でも [...] そのままでも対応
-        const list = response.data.data ?? response.data;
-
-        setExpressions(list);
-      } catch (error) {
-        console.error("表現一覧の取得に失敗しました。", error);
-        setError("表現の取得に失敗しました。時間をおいて再度お試しください。");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchExpression();
   }, []);
+
+  // 削除処理
+  const handleDelete = async (e, id) => {
+    // 伝播防止
+    e.preventDefault();
+    e.stopPropagation();
+
+    // 確認ダイアログ
+    if (!window.confirm("この表現を削除しますか？")) {
+      return;
+    }
+
+    try {
+      await apiClient.delete(`/expressions/${id}`);
+
+      // 削除後に一覧を再取得
+      await fetchExpression();
+    } catch (error) {
+      console.error("表現の削除に失敗しました。", error);
+      alert("表現の削除に失敗しました。時間をおいて再度お試しください。");
+    }
+  };
 
   // ブラウザ表示部分分岐
   if (loading) {
@@ -91,6 +112,11 @@ const ExpressionListPage = () => {
             <p className="expression-favorite">
               {expression.is_favorite ? "❤ お気に入り" : "♡"}
             </p>
+
+            {/* 削除ボタン */}
+            <button onClick={(e) => handleDelete(e, expression.id)}>
+              削除
+            </button>
           </Link>
         ))}
       </div>
