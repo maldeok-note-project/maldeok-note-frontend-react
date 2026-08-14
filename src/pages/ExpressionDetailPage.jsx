@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import apiClient from "../api/client";
+import { toggleFavorite } from "../api/expressionActions";
 
 // 日付
 const formatHeardAt = (isoDateString) => {
@@ -53,6 +54,21 @@ const ExpressionDetailPage = () => {
     fetchExpressionDetail();
     // idが変わったら（別の詳細ページに移動したら）再取得
   }, [id]);
+
+  // お気に入りON/OFF
+  const handleToggleFavorite = async () => {
+    try {
+      const updated = await toggleFavorite(id);
+
+      setExpression((prevExpression) => ({
+        ...prevExpression,
+        is_favorite: updated.is_favorite,
+      }));
+    } catch (error) {
+      console.error("お気に入りの更新に失敗しました。", error);
+      alert("お気に入りの更新に失敗しました。時間をおいて再度お試しください。");
+    }
+  };
 
   // 削除処理
   const handleDelete = async () => {
@@ -107,7 +123,10 @@ const ExpressionDetailPage = () => {
       {expression.memo && <p className="expression-memo">{expression.memo}</p>}
 
       {/* お気に入り */}
-      <button className="expression-favorite">
+      <button
+        className="expression-favorite-button"
+        onClick={handleToggleFavorite}
+      >
         {expression.is_favorite ? "❤" : "♡"}
       </button>
 
