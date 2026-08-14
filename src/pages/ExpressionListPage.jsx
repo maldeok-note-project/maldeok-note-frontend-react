@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../api/client";
 import { Link } from "react-router-dom";
+import { toggleFavorite } from "../api/expressionActions";
 
 // 日付を読める形にする
 const formatHeardAt = (isoDateString) => {
@@ -47,6 +48,29 @@ const ExpressionListPage = () => {
   useEffect(() => {
     fetchExpression();
   }, []);
+
+  // お気に入りON/OFF
+  const handleToggleFavorite = async (e, id) => {
+    // 伝播防止
+    e.stopPropagation();
+    e.preventDefault();
+
+    try {
+      const updated = await toggleFavorite(id);
+
+      // 更新後のデータで置き換え
+      setExpressions((prevExpressions) =>
+        prevExpressions.map((expression) =>
+          expression.id === id
+            ? { ...expression, is_favorite: updated.is_favorite }
+            : expression,
+        ),
+      );
+    } catch (error) {
+      console.error("お気に入りの更新に失敗しました。", error);
+      alert("お気に入りの更新に失敗しました。時間をおいて再度お試しください。");
+    }
+  };
 
   // 削除処理
   const handleDelete = async (e, id) => {
@@ -108,12 +132,15 @@ const ExpressionListPage = () => {
               <p className="expression-heard-at">
                 {formatHeardAt(expression.heard_at)}
               </p>
-
-              {/* お気に入り（表示のみ） */}
-              <p className="expression-favorite">
-                {expression.is_favorite ? "❤ お気に入り" : "♡"}
-              </p>
             </Link>
+
+            {/* お気に入り（表示のみ） */}
+            <button
+              className="expression-favorite-button"
+              onClick={(e) => handleToggleFavorite(e, expression.id)}
+            >
+              {expression.is_favorite ? "❤ お気に入り" : "♡"}
+            </button>
 
             {/* 削除ボタン */}
             <button onClick={(e) => handleDelete(e, expression.id)}>
