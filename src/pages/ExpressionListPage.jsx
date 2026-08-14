@@ -108,12 +108,12 @@ const ExpressionListPage = () => {
               <p className="expression-heard-at">
                 {formatHeardAt(expression.heard_at)}
               </p>
-
-              {/* お気に入り（表示のみ） */}
-              <p className="expression-favorite">
-                {expression.is_favorite ? "❤ お気に入り" : "♡"}
-              </p>
             </Link>
+
+            {/* お気に入り（表示のみ） */}
+            <button className="expression-favorite">
+              {expression.is_favorite ? "❤ お気に入り" : "♡"}
+            </button>
 
             {/* 削除ボタン */}
             <button onClick={(e) => handleDelete(e, expression.id)}>
