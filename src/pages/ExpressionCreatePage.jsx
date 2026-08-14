@@ -41,11 +41,11 @@ const ExpressionCreatePage = () => {
         const response = await apiClient.get("/speaker-categories");
 
         setCategories(response.data.data ?? []);
-      } catch (err) {
-        setCategoriesError("カテゴリー一覧の取得に失敗しました。", err);
+      } catch (error) {
+        setCategoriesError("カテゴリ一覧の取得に失敗しました。", error);
         console.error(
-          "カテゴリー一覧の取得に失敗しました。時間をおいて再度お試しください。",
-          err,
+          "カテゴリ一覧の取得に失敗しました。時間をおいて再度お試しください。",
+          error,
         );
       } finally {
         setCategoriesLoading(false);
@@ -121,13 +121,13 @@ const ExpressionCreatePage = () => {
     <div className="expression-create-page">
       <h1>表現登録</h1>
 
-      {/* カテゴリー取得エラー */}
+      {/* カテゴリ取得エラー */}
       {categoriesError && <p style={{ color: "red" }}>{categoriesError}</p>}
 
       {/* 0件の場合 */}
       {hasNoCategories && (
         <p style={{ color: "red" }}>
-          カテゴリーが登録されていないため、表現を登録できません。先にカテゴリーを登録してください。
+          カテゴリが登録されていないため、表現を登録できません。先にカテゴリを登録してください。
         </p>
       )}
 
@@ -161,9 +161,9 @@ const ExpressionCreatePage = () => {
           {errors.meaning && <p style={{ color: "red" }}>{errors.meaning}</p>}
         </div>
 
-        {/* カテゴリー */}
+        {/* カテゴリ */}
         <div>
-          <label>種類</label>
+          <label>カテゴリ</label>
           <select
             name="speaker_category_id"
             value={form.speaker_category_id}
