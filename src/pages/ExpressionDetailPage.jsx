@@ -39,8 +39,8 @@ const ExpressionDetailPage = () => {
         setExpression(detail);
 
         // エラー処理
-      } catch (err) {
-        console.error("表現の取得に失敗しました。", err);
+      } catch (error) {
+        console.error("表現の取得に失敗しました。", error);
         setError("表現の取得に失敗しました。時間をおいて再度お試しください。");
 
         // finallyでローディング状態を解除

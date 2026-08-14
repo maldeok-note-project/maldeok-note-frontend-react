@@ -41,11 +41,11 @@ const ExpressionCreatePage = () => {
         const response = await apiClient.get("/speaker-categories");
 
         setCategories(response.data.data ?? []);
-      } catch (err) {
-        setCategoriesError("カテゴリー一覧の取得に失敗しました。", err);
+      } catch (error) {
+        setCategoriesError("カテゴリー一覧の取得に失敗しました。", error);
         console.error(
           "カテゴリー一覧の取得に失敗しました。時間をおいて再度お試しください。",
-          err,
+          error,
         );
       } finally {
         setCategoriesLoading(false);

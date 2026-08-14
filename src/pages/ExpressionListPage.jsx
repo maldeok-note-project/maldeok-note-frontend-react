@@ -38,8 +38,8 @@ const ExpressionListPage = () => {
         const list = response.data.data ?? response.data;
 
         setExpressions(list);
-      } catch (err) {
-        console.error("表現一覧の取得に失敗しました。", err);
+      } catch (error) {
+        console.error("表現一覧の取得に失敗しました。", error);
         setError("表現の取得に失敗しました。時間をおいて再度お試しください。");
       } finally {
         setLoading(false);

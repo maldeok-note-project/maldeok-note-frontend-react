@@ -31,8 +31,8 @@ const CategoryListPage = () => {
       // レスポンス対応
       const list = response.data.data ?? response.data;
       setCategories(list);
-    } catch (err) {
-      console.error("カテゴリ一覧の取得に失敗しました。", err);
+    } catch (error) {
+      console.error("カテゴリ一覧の取得に失敗しました。", error);
       setError(
         "カテゴリ一覧の取得に失敗しました。時間をおいて再度お試しください。",
       );
@@ -59,12 +59,12 @@ const CategoryListPage = () => {
       await apiClient.delete(`/speaker-categories/${categoryId}`);
       // 削除後にカテゴリ一覧を再取得
       await fetchCategories();
-    } catch (err) {
+    } catch (error) {
       console.error("カテゴリ削除に失敗しました。", err);
 
       // 409エラーの場合は、削除できない旨を表示
-      if (err.response?.status === 409) {
-        alert(err.response.data.message);
+      if (error.response?.status === 409) {
+        alert(error.response.data.message);
       } else {
         alert("カテゴリ削除に失敗しました。時間をおいて再度お試しください。");
       }
