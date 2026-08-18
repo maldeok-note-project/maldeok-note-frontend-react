@@ -27,15 +27,29 @@ const ExpressionListPage = () => {
   // 検索キーワードの箱
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  const fetchExpression = async (keyword = "") => {
+  // 絞り込み条件の箱
+  const [categories, setCategories] = useState([]);
+
+  // 現在選択中のカテゴリID
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+
+  // 表現一覧を取得する関数
+  const fetchExpression = async (keyword = "", categoryId = "") => {
     try {
       setLoading(true);
       setError(null);
 
+      // 検索キーワードと絞り込み条件を「AND」でAPIに渡す
+      const params = {};
+      if (keyword) {
+        params.search = keyword;
+      }
+      if (categoryId) {
+        params.speaker_category_id = categoryId;
+      }
+
       // api呼び出し
-      const response = await apiClient.get("/expressions", {
-        params: keyword ? { search: keyword } : {},
-      });
+      const response = await apiClient.get("/expressions", { params });
 
       // バックエンドのレスポンス形式が
       // { data: [...] } でも [...] そのままでも対応
@@ -50,9 +64,22 @@ const ExpressionListPage = () => {
     }
   };
 
+  // ドロップダウンのカテゴリ一覧を取得する関数
+  const fetchCategories = async () => {
+    try {
+      const response = await apiClient.get("/speaker-categories");
+      const list = response.data.data ?? response.data;
+      setCategories(list);
+    } catch (error) {
+      // エラー処理
+      console.error("カテゴリ一覧の取得に失敗しました。", error);
+    }
+  };
+
   // useEffect：画面が最初に表示されたタイミングで一度だけ実行される
   useEffect(() => {
     fetchExpression();
+    fetchCategories();
   }, []);
 
   // 検索フォームの送信時
@@ -61,7 +88,16 @@ const ExpressionListPage = () => {
     e.preventDefault();
 
     // 現在の入力値で検索
-    fetchExpression(searchKeyword);
+    fetchExpression(searchKeyword, selectedCategoryId);
+  };
+
+  // カテゴリ選択時
+  const handleCategoryChange = (e) => {
+    const newCategoryId = e.target.value;
+    setSelectedCategoryId(newCategoryId);
+
+    // 変更時に再取得
+    fetchExpression(searchKeyword, newCategoryId);
   };
 
   // お気に入りON/OFF
@@ -101,7 +137,7 @@ const ExpressionListPage = () => {
       await apiClient.delete(`/expressions/${id}`);
 
       // 削除後に一覧を再取得
-      await fetchExpression();
+      await fetchExpression(searchKeyword, selectedCategoryId);
     } catch (error) {
       console.error("表現の削除に失敗しました。", error);
       alert("表現の削除に失敗しました。時間をおいて再度お試しください。");
@@ -130,6 +166,17 @@ const ExpressionListPage = () => {
           onChange={(e) => setSearchKeyword(e.target.value)}
           placeholder="表現・意味を検索"
         />
+
+        {/* カテゴリ絞り込みドロップダウン */}
+        <select value={selectedCategoryId} onChange={handleCategoryChange}>
+          <option value="">すべてのカテゴリ</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+
         <button type="submit">検索</button>
       </form>
 
