@@ -33,8 +33,15 @@ const ExpressionListPage = () => {
   // 現在選択中のカテゴリID
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
+  // 並び替え
+  const [sortOrder, setSortOrder] = useState("newest");
+
   // 表現一覧を取得する関数
-  const fetchExpression = async (keyword = "", categoryId = "") => {
+  const fetchExpression = async (
+    keyword = "",
+    categoryId = "",
+    sort = "newest",
+  ) => {
     try {
       setLoading(true);
       setError(null);
@@ -47,6 +54,7 @@ const ExpressionListPage = () => {
       if (categoryId) {
         params.speaker_category_id = categoryId;
       }
+      params.sort = sort;
 
       // api呼び出し
       const response = await apiClient.get("/expressions", { params });
@@ -78,7 +86,7 @@ const ExpressionListPage = () => {
 
   // useEffect：画面が最初に表示されたタイミングで一度だけ実行される
   useEffect(() => {
-    fetchExpression();
+    fetchExpression(searchKeyword, selectedCategoryId, sortOrder);
     fetchCategories();
   }, []);
 
@@ -88,7 +96,7 @@ const ExpressionListPage = () => {
     e.preventDefault();
 
     // 現在の入力値で検索
-    fetchExpression(searchKeyword, selectedCategoryId);
+    fetchExpression(searchKeyword, selectedCategoryId, sortOrder);
   };
 
   // カテゴリ選択時
@@ -97,7 +105,16 @@ const ExpressionListPage = () => {
     setSelectedCategoryId(newCategoryId);
 
     // 変更時に再取得
-    fetchExpression(searchKeyword, newCategoryId);
+    fetchExpression(searchKeyword, newCategoryId, sortOrder);
+  };
+
+  // 並び替え選択時
+  const handleSortChange = (e) => {
+    const newSort = e.target.value;
+    setSortOrder(newSort);
+
+    // 変更時に再取得
+    fetchExpression(searchKeyword, selectedCategoryId, newSort);
   };
 
   // お気に入りON/OFF
@@ -137,7 +154,7 @@ const ExpressionListPage = () => {
       await apiClient.delete(`/expressions/${id}`);
 
       // 削除後に一覧を再取得
-      await fetchExpression(searchKeyword, selectedCategoryId);
+      await fetchExpression(searchKeyword, selectedCategoryId, sortOrder);
     } catch (error) {
       console.error("表現の削除に失敗しました。", error);
       alert("表現の削除に失敗しました。時間をおいて再度お試しください。");
@@ -175,6 +192,12 @@ const ExpressionListPage = () => {
               {category.name}
             </option>
           ))}
+        </select>
+
+        {/* 並び替えドロップダウン */}
+        <select value={sortOrder} onChange={handleSortChange}>
+          <option value="newest">新しい順</option>
+          <option value="oldest">古い順</option>
         </select>
 
         <button type="submit">検索</button>
