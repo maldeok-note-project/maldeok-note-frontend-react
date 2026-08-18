@@ -134,7 +134,13 @@ const ExpressionListPage = () => {
       </form>
 
       {expressions.length === 0 ? (
-        <div>表現が登録されていません。最初の一言を残してみましょう！</div>
+        <div>
+          {searchKeyword
+            ? // 検索キーワードがある場合
+              "検索結果が見つかりませんでした。別のキーワードでお試しください。"
+            : // 検索キーワードが空の場合
+              "表現が登録されていません。最初の一言を残してみましょう！"}
+        </div>
       ) : (
         // 表現カードリスト
         <div className="expression-card-list">
