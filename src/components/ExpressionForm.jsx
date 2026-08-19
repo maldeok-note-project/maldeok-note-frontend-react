@@ -4,7 +4,7 @@ import apiClient from "../api/client";
 
 // propsで渡されたカテゴリ一覧を使ってフォームを表示するコンポーネント
 const ExpressionForm = ({
-  initialValeues, // フォームの初期値(Editは取得済みデータ、Createは空)
+  initialValues, // フォームの初期値(Editは取得済みデータ、Createは空)
   onSubmit, // 送信時に親へ渡すコールバック(親がPOST/PATCHを実行する)
   errors, // 親がAPIから受け取ったバリデーションエラー
   isSubmitting, // 親が管理する送信中フラグ
@@ -63,12 +63,15 @@ const ExpressionForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
+      {/* 全体エラー */}
+      {errors.general && <p style={{ color: "red" }}>{errors.general}</p>}
+
       {/* カテゴリ(エラー) */}
-      {categoriesError && <p style={{ color: red }}>{categoriesError}</p>}
+      {categoriesError && <p style={{ color: "red" }}>{categoriesError}</p>}
 
       {/* 0件の場合 */}
       {hasNoCategories && (
-        <p style={{ color: red }}>
+        <p style={{ color: "red" }}>
           カテゴリが登録されていないため、表現を登録できません。
           <br />
           まずはカテゴリを登録してください。
@@ -85,7 +88,7 @@ const ExpressionForm = ({
           onChange={handleChange}
           placeholder="例: 잠 와"
         />
-        {errors.phrase && <p style={{ color: red }}>{errors.phrase}</p>}
+        {errors.phrase && <p style={{ color: "red" }}>{errors.phrase}</p>}
       </div>
 
       {/* 意味 */}
@@ -98,7 +101,7 @@ const ExpressionForm = ({
           onChange={handleChange}
           placeholder="例: 眠い"
         />
-        {errors.meaning && <p style={{ color: red }}>{errors.meaning}</p>}
+        {errors.meaning && <p style={{ color: "red" }}>{errors.meaning}</p>}
       </div>
 
       {/* カテゴリ */}
@@ -118,7 +121,7 @@ const ExpressionForm = ({
           ))}
         </select>
         {errors.speaker_category_id && (
-          <p style={{ color: red }}>{errors.speaker_category_id}</p>
+          <p style={{ color: "red" }}>{errors.speaker_category_id}</p>
         )}
       </div>
 
@@ -194,3 +197,5 @@ const ExpressionForm = ({
     </form>
   );
 };
+
+export default ExpressionForm;
