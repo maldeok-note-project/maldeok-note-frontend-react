@@ -29,7 +29,7 @@ const BadgeListPage = () => {
         const myBadges = myBadgesRes.data;
 
         // expressionsはLaravelのページネーター形式
-        const currentCount = expressionsRes.data.total;
+        const total = expressionsRes.data.total;
 
         // 突き合わせ
         const merged = allBadges.map((badge) => {
@@ -37,7 +37,7 @@ const BadgeListPage = () => {
           const myBadge = myBadges.find((b) => b.id === badge.id);
           return {
             ...badge,
-            isUnlocked: !!myBadges,
+            isUnlocked: !!myBadge,
             unlockedAt: myBadge ? myBadge.unlocked_at : null,
           };
         });
@@ -46,18 +46,18 @@ const BadgeListPage = () => {
         merged.sort((a, b) => a.condition - b.condition);
 
         setBadges(merged);
-        setCurrentCount(totalCount);
+        setCurrentCount(total);
       } catch (error) {
-        setErroror("バッジ情報の取得に失敗しました。");
+        setError("バッジ情報の取得に失敗しました。");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchBadgeData();
+    fetchBadges();
   }, []);
 
-  if (Loding) return <p>読み込み中...</p>;
+  if (loading) return <p>読み込み中...</p>;
   if (error) return <p>{error}</p>;
 
   return (
