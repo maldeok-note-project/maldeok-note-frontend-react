@@ -8,7 +8,7 @@ const TopPage = () => {
       <h1 className="mb-3">말덕노트</h1>
 
       {/* キャッチコピー */}
-      <p className="lead mb-2">推しや友達の生の韓国語を記録しよう</p>
+      <p className="lead mb-2 catch-copy">推しや友達の生の韓国語を記録しよう</p>
 
       {/* 説明 */}
       <p className="text-muted mb-4">
