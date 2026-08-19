@@ -1,5 +1,5 @@
 // 表現登録
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../api/client";
 import ExpressionForm from "../components/ExpressionForm";
