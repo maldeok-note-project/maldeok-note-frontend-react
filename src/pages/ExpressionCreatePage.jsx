@@ -99,11 +99,11 @@ const ExpressionCreatePage = () => {
       // 422エラーの場合はバリデーションエラーとして処理
       if (error.response?.data?.errors) {
         const rawErrors = error.response.data.errors;
-        const formatedErrors = {};
+        const formattedErrors = {};
         Object.keys(rawErrors).forEach((key) => {
-          formatedErrors[key] = rawErrors[key][0];
+          formattedErrors[key] = rawErrors[key][0];
         });
-        setErrors(formatedErrors);
+        setErrors(formattedErrors);
       } else if (error.response?.data?.message) {
         // それ以外のエラーの場合はメッセージを表示
         setErrors({ general: error.response.data.message });
