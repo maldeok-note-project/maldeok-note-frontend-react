@@ -25,11 +25,11 @@ const ExpressionEditPage = () => {
 
   // 画面表示とともにカテゴリ取得
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchExpression = async () => {
       try {
-        setCategoriesLoading(true);
-        setCategoriesError(null);
-        const response = await apiClient.get(`/speaker-categories/${id}`);
+        setExpressionLoading(true);
+        setExpressionError(null);
+        const response = await apiClient.get(`/expressions/${id}`);
         const data = response.data.data ?? response.data;
 
         // ExpressionFormに渡す初期値としてセット
@@ -45,18 +45,18 @@ const ExpressionEditPage = () => {
           is_favorite: data.is_favorite,
         });
       } catch (error) {
-        setCategoriesError("カテゴリの取得に失敗しました。");
+        setExpressionError("表現の取得に失敗しました。");
         console.error(
-          "カテゴリ一覧の取得に失敗しました。時間をおいて再度お試しください。",
+          "表現の取得に失敗しました。時間をおいて再度お試しください。",
           error,
         );
       } finally {
-        setCategoriesLoading(false);
+        setExpressionLoading(false);
       }
     };
 
-    fetchCategories();
-  }, []);
+    fetchExpression();
+  }, [id]);
 
   // リクエスト送信
   const handleFormSubmit = async (form) => {
