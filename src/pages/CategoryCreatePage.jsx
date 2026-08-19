@@ -50,10 +50,10 @@ const CategoryCreatePage = () => {
         const rawErrors = error.response.data.errors;
         const formattedErrors = {};
         Object.keys(rawErrors).forEach((key) => {
-          formatted[key] = rawErrors[key][0];
+          formattedErrors[key] = rawErrors[key][0];
         });
         // 409（重複エラー）: オブジェクトなし、messageあり
-        setError(formattedErrors);
+        setErrors(formattedErrors);
       } else if (error.response?.data?.message) {
         setErrors({
           general: error.response.data.message,
