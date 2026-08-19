@@ -11,7 +11,7 @@ const ExpressionForm = ({
   submitLabel, // 送信ボタンの文言("登録" or "更新")
 }) => {
   // フォーム内容
-  const [form, setForm] = useState(initialValeues);
+  const [form, setForm] = useState(initialValues);
 
   // カテゴリ一覧
   const [categories, setCategories] = useState([]);
