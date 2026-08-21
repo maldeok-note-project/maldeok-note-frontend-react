@@ -43,9 +43,11 @@
 
 /* ===== 全体の背景・文字色 ===== */
 body {
-  background-color: var(--maldeok-pink-light);
+  /* 縦方向グラデーション：上は淡いピンク、下は少し濃いピンク */
+  background: linear-gradient(180deg, #fff5f8 0%, #ffe3ed 50%, #ffd1e3 100%);
   color: var(--maldeok-dark);
   margin: 0; /* ブラウザ標準の余白をリセット */
+  min-height: 100vh; /* グラデーションが画面の高さいっぱいに広がるようにする */
 }
 
 /* ===== 見出しのスタイル ===== */
