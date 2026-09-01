@@ -1,4 +1,5 @@
 import { Navigate, replace } from "react-router-dom";
+import Header from "./Header";
 
 // 未ログイン者を弾く
 const AuthGuard = ({ children }) => {
@@ -11,7 +12,12 @@ const AuthGuard = ({ children }) => {
   }
 
   // トークンがあれば継続
-  return children;
+  return (
+    <>
+      <Header />
+      {children}
+    </>
+  );
 };
 
 export default AuthGuard;
