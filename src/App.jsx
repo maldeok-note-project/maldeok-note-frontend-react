@@ -14,15 +14,11 @@ import ExpressionEditPage from "./pages/ExpressionEditPage";
 import FavoriteListPage from "./pages/FavoriteListPage";
 import BadgeListPage from "./pages/BadgeListPage";
 
-import Header from "./components/Header";
 import AuthGuard from "./components/AuthGuard";
 
 function App() {
   return (
     <BrowserRouter>
-      {/* 全ページ共通ヘッダー */}
-      <Header />
-
       <Routes>
         {/* ログイン不要なページ */}
         {/* トップページ */}
