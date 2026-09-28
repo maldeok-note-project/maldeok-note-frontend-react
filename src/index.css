@@ -219,7 +219,7 @@ h1 {
 /* ===== カード内のボタン ===== */
 
 /* お気に入りボタン（カードと同じ色の丸いボタン） */
-.expression-favorite-button {
+.expression-card .expression-favorite-button {
   padding: 4px 14px;
   background: #fff;
   border: 2px solid var(--card-color);
@@ -231,7 +231,7 @@ h1 {
 }
 
 /* マウスを乗せたら、カードの色で塗りつぶす */
-.expression-favorite-button:hover {
+.expression-card .expression-favorite-button:hover {
   background: var(--card-color);
 }
 
@@ -254,8 +254,8 @@ h1 {
 }
 
 /* キーボード操作のときの枠（どのボタンにいるか分かるようにする） */
-.expression-favorite-button:focus-visible,
-.expression-delete-button:focus-visible {
+.expression-card .expression-favorite-button:focus-visible,
+.expression-card .expression-delete-button:focus-visible {
   outline: 2px solid var(--maldeok-pink);
   outline-offset: 2px;
 }
