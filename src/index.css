@@ -100,3 +100,162 @@ h1 {
   border-color: var(--maldeok-pink);
   color: #fff;
 }
+
+/* ===== 表現カード：カテゴリごとの色（8色パレット） ===== */
+/* --card-color は「このカードの色」を入れる変数。下の .expression-card などで使う */
+.card-color-1 {
+  --card-color: #ff6fa5;
+} /* ピンク */
+.card-color-2 {
+  --card-color: #9ad4f5;
+} /* 水色 */
+.card-color-3 {
+  --card-color: #ffe08a;
+} /* 黄色 */
+.card-color-4 {
+  --card-color: #a8e6cf;
+} /* ミント */
+.card-color-5 {
+  --card-color: #c9b8f0;
+} /* ラベンダー */
+.card-color-6 {
+  --card-color: #ffc9a3;
+} /* ピーチ */
+.card-color-7 {
+  --card-color: #d4e8a0;
+} /* ライム */
+.card-color-8 {
+  --card-color: #cfcaca;
+} /* グレー */
+
+/* ===== ページの左右の余白 ===== */
+.expression-list-page,
+.favorite-list-page {
+  padding: 0 16px 32px;
+}
+
+/* ===== カードを並べるグリッド ===== */
+/* 1枚の最小幅は240px。画面が広いほど列が増え、狭いと1列になる */
+.expression-card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+/* ===== カード本体（トレカ風） ===== */
+.expression-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  padding: 16px;
+  background: #fff;
+  border: 4px solid var(--card-color);
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+/* マウスを乗せたら少し浮く */
+.expression-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* リンクの青い下線を消して、文字色を引き継ぐ */
+.expression-card-link {
+  flex: 1; /* ボタン行を下に押しやる */
+  color: inherit;
+  text-decoration: none;
+}
+
+.expression-card-link p {
+  margin: 0 0 8px;
+}
+
+/* カテゴリのタグ */
+.expression-category-tag {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 2px 12px;
+  background: var(--card-color);
+  border-radius: 999px;
+  color: var(--maldeok-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* 表現（一番目立たせる） */
+.expression-phrase {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* 意味 */
+.expression-meaning {
+  font-size: 15px;
+}
+
+/* 誰が言ったか・日付 */
+.expression-speaker-name {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.expression-heard-at {
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* ボタンの行 */
+.expression-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* ===== カード内のボタン ===== */
+
+/* お気に入りボタン（カードと同じ色の丸いボタン） */
+.expression-card .expression-favorite-button {
+  padding: 4px 14px;
+  background: #fff;
+  border: 2px solid var(--card-color);
+  border-radius: 999px;
+  color: var(--maldeok-dark);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* マウスを乗せたら、カードの色で塗りつぶす */
+.expression-card .expression-favorite-button:hover {
+  background: var(--card-color);
+}
+
+/* 削除ボタン（控えめな文字だけのボタン） */
+.expression-delete-button {
+  margin-left: auto; /* 右端に寄せる */
+  padding: 4px 8px;
+  background: none;
+  border: none;
+  color: #8a8585;
+  font-size: 13px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* マウスを乗せたら赤くして、消える操作だと伝える */
+.expression-delete-button:hover {
+  color: #e5484d;
+  text-decoration: underline;
+}
+
+/* キーボード操作のときの枠（どのボタンにいるか分かるようにする） */
+.expression-card .expression-favorite-button:focus-visible,
+.expression-card .expression-delete-button:focus-visible {
+  outline: 2px solid var(--maldeok-pink);
+  outline-offset: 2px;
+}
