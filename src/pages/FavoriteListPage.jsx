@@ -1,18 +1,8 @@
 // お気に入り
 import { useEffect, useState } from "react";
 import apiClient from "../api/client";
-import { Link } from "react-router-dom";
+import ExpressionCard from "../components/ExpressionCard";
 import { toggleFavorite } from "../api/expressionActions";
-
-// 日付を読める形に
-const formatHeardAt = (isoDateString) => {
-  const date = new Date(isoDateString);
-  return date.toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
 
 const FavoriteListPage = () => {
   const [expressions, setExpressions] = useState({});
@@ -86,36 +76,12 @@ const FavoriteListPage = () => {
 
       <div className="expression-card-list">
         {expressions.map((expression) => (
-          <div className="expression-card" key={expression.id}>
-            <Link
-              to={`/expressions/${expression.id}`}
-              className="expressoin-card-link"
-            >
-              {/* 表現 */}
-              <p className="expression-phrase">{expression.phrase}</p>
-
-              {/* 意味 */}
-              <p className="expression-meaning">{expression.meaning}</p>
-
-              {/* 誰が言ったか */}
-              <p className="expression-speaker-name">
-                {expression.speaker_name}
-              </p>
-
-              {/* 日付 */}
-              <p className="expression-heard-at">
-                {formatHeardAt(expression.heard_at)}
-              </p>
-            </Link>
-
-            {/* お気に入り */}
-            <button
-              className="expression-favorite-button"
-              onClick={(e) => handleToggleFavorite(e, expression.id)}
-            >
-              {expression.is_favorite ? "❤ お気に入り" : "♡"}
-            </button>
-          </div>
+          // onDelete を渡さない → 削除ボタンは出ない（今までと同じ動き）
+          <ExpressionCard
+            key={expression.id}
+            expression={expression}
+            onToggleFavorite={handleToggleFavorite}
+          />
         ))}
       </div>
     </div>
