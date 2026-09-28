@@ -69,14 +69,19 @@ const Header = () => {
             </li>
 
             <li className="nav-item">
-              <NavLink to="favorites" className={linkClass} onClick={closeMenu}>
+              <NavLink
+                to="/favorites"
+                end
+                className={linkClass}
+                onClick={closeMenu}
+              >
                 お気に入り
               </NavLink>
             </li>
 
             <li className="nav-item">
               <NavLink
-                to="expressions/create"
+                to="/expressions/create"
                 className={linkClass}
                 onClick={closeMenu}
               >
@@ -86,7 +91,7 @@ const Header = () => {
           </ul>
 
           {/* ログアウトボタン */}
-          <button className="btn-outline=secondary" onClick={handleLogout}>
+          <button className="btn btn-outline-secondary" onClick={handleLogout}>
             ログアウト
           </button>
         </div>
