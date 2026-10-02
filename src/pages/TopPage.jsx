@@ -19,7 +19,7 @@ const TopPage = () => {
 
       {/* ボタンエリア */}
       <div className="d-flex gap-3">
-        <Link to="/login" className="btn btn-primary">
+        <Link to="/register" className="btn btn-primary">
           新規登録
         </Link>
         <Link to="/login" className="btn btn-outline-primary">
