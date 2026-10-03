@@ -148,6 +148,14 @@ const ExpressionDetailPage = () => {
           削除
         </button>
       </div>
+
+      {/* 削除確認モーダル */}
+      <ConfirmModal
+        show={showDeleteModal}
+        message="この表現を削除しますか？"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setShowDeleteModal(false)}
+      />
     </div>
   );
 };
