@@ -1,10 +1,7 @@
-// 表現カード（一覧画面・お気に入り画面で共通利用）
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ConfirmModal from "../components/ConfirmModal";
-
-// 枠の色の数（index.css の .card-color-1〜8 と数をそろえる）
-const CARD_COLOR_COUNT = 8;
+import { getColorNumber } from "../utils/cardColor";
 
 // 日付を読める形にする
 const formatHeardAt = (isoDateString) => {
@@ -14,16 +11,6 @@ const formatHeardAt = (isoDateString) => {
     month: "long",
     day: "numeric",
   });
-};
-
-// カテゴリIDから色の番号（1〜8）を決める
-// 例：ID 1 → 1番、ID 8 → 8番、ID 9 → また1番
-// IDがない場合は 8番（グレー）にする（予備の色）
-const getColorNumber = (categoryId) => {
-  if (!categoryId) {
-    return CARD_COLOR_COUNT;
-  }
-  return ((categoryId - 1) % CARD_COLOR_COUNT) + 1;
 };
 
 // 表現カードコンポーネント

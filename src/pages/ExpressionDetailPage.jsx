@@ -4,6 +4,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import apiClient from "../api/client";
 import { toggleFavorite } from "../api/expressionActions";
 import ConfirmModal from "../components/ConfirmModal";
+import { getColorNumber } from "../utils/cardColor";
 
 // 日付
 const formatHeardAt = (isoDateString) => {
@@ -101,53 +102,84 @@ const ExpressionDetailPage = () => {
     return <div>表現が見つかりませんでした。</div>;
   }
 
+  // カテゴリの色番号（カードと、同じロジック）
+  const colorNumber = getColorNumber(expression.speaker_category_id);
+  const categoryName = expression.speaker_category?.name;
+
   return (
-    <div className="expression-detail-page">
-      <Link to="/expressions">一覧に戻る</Link>
+    <div>
+      {/* カードの外：一覧に戻るリンク */}
+      <Link to="/expressions" className="expression-detail-back-link">
+        一覧に戻る
+      </Link>
 
-      <h1 className="expression-phrase">{expression.phrase}</h1>
-      <p className="expression-heard-at">
-        📅{formatHeardAt(expression.heard_at)}
-      </p>
+      {/* カード本体：card-color-N で、枠とタグの色が変わる */}
+      <div className={`expression-detail-page card-color-${colorNumber}`}>
+        {/* カテゴリのタグ */}
+        {categoryName && (
+          <span className="expression-category-tag">{categoryName}</span>
+        )}
 
-      <p className="expression-meaning">{expression.meaning}</p>
+        {/* 表現 */}
+        <h1 className="expression-phrase">{expression.phrase}</h1>
 
-      {/* カテゴリ名：話者名 */}
-      <p className="expression.speaker">
-        {expression.speaker_category?.name} : {expression.speaker_name}
-      </p>
+        {/* 意味 */}
+        <p className="expression-meaning">{expression.meaning}</p>
 
-      {/* 場所 */}
-      {/* 「もし〜だったら表示する」Reactでよく使う短縮の書き方 */}
-      {expression.place && (
-        <p className="expression-place">📍{expression.place}</p>
-      )}
+        {/* だれが・いつ・どこで */}
+        <p className="expression-detail-section-title">だれが・いつ・どこで</p>
+        <div className="expression-detail-meta">
+          <p className="expression-speaker">
+            👤{categoryName} : {expression.speaker_name}
+          </p>
+          <p className="expression-heard-at">
+            📅{formatHeardAt(expression.heard_at)}
+          </p>
+          {expression.place && (
+            <p className="expression-place">📍{expression.place}</p>
+          )}
+        </div>
 
-      {expression.memo && <p className="expression-memo">{expression.memo}</p>}
+        {/* メモ */}
+        {expression.memo && (
+          <>
+            <p className="expression-detail-section-title">メモ</p>
+            <p className="expression-memo">{expression.memo}</p>
+          </>
+        )}
 
-      {/* お気に入り・編集・削除 */}
-      <div className="expression-detail-actions">
-        <button
-          className="expression-favorite-button"
-          onClick={handleToggleFavorite}
-        >
-          {expression.is_favorite ? "❤" : "♡"}
-        </button>
+        {/* お気に入り・編集・削除 */}
+        <div className="expression-detail-actions">
+          <button
+            className="expression-favorite-button"
+            onClick={handleToggleFavorite}
+          >
+            {expression.is_favorite ? "❤" : "♡"}
+          </button>
 
-        <Link
-          to={`/expressions/${id}/edit`}
-          className="expression-detail-edit-button"
-        >
-          編集
-        </Link>
+          <Link
+            to={`/expressions/${id}/edit`}
+            className="expression-detail-edit-button"
+          >
+            編集
+          </Link>
 
-        <button
-          className="expression-delete-button"
-          onClick={handleDeleteClick}
-        >
-          削除
-        </button>
+          <button
+            className="expression-delete-button"
+            onClick={handleDeleteClick}
+          >
+            削除
+          </button>
+        </div>
       </div>
+
+      {/* 削除確認モーダル */}
+      <ConfirmModal
+        show={showDeleteModal}
+        message="この表現を削除しますか？"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setShowDeleteModal(false)}
+      />
     </div>
   );
 };
