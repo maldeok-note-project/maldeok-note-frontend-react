@@ -81,6 +81,16 @@ const Header = () => {
 
             <li className="nav-item">
               <NavLink
+                to="/categories"
+                className={linkClass}
+                onClick={closeMenu}
+              >
+                カテゴリ
+              </NavLink>
+            </li>
+
+            <li className="nav-item">
+              <NavLink
                 to="/expressions/create"
                 className={linkClass}
                 onClick={closeMenu}
