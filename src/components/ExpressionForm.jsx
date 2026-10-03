@@ -62,16 +62,16 @@ const ExpressionForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="app-form">
       {/* 全体エラー */}
-      {errors.general && <p style={{ color: "red" }}>{errors.general}</p>}
+      {errors.general && <p className="app-form-error">{errors.general}</p>}
 
       {/* カテゴリ(エラー) */}
-      {categoriesError && <p style={{ color: "red" }}>{categoriesError}</p>}
+      {categoriesError && <p className="app-form-error">{categoriesError}</p>}
 
       {/* 0件の場合 */}
       {hasNoCategories && (
-        <p style={{ color: "red" }}>
+        <p className="app-form-error">
           カテゴリが登録されていないため、表現を登録できません。
           <br />
           まずはカテゴリを登録してください。
@@ -79,7 +79,7 @@ const ExpressionForm = ({
       )}
 
       {/* 表現 */}
-      <div>
+      <div className="app-form-group">
         <label>表現</label>
         <input
           type="text"
@@ -87,12 +87,13 @@ const ExpressionForm = ({
           value={form.phrase}
           onChange={handleChange}
           placeholder="例: 잠 와"
+          className="app-form-input"
         />
-        {errors.phrase && <p style={{ color: "red" }}>{errors.phrase}</p>}
+        {errors.phrase && <p className="app-form-error">{errors.phrase}</p>}
       </div>
 
       {/* 意味 */}
-      <div>
+      <div className="app-form-group">
         <label>意味</label>
         <input
           type="text"
@@ -100,18 +101,20 @@ const ExpressionForm = ({
           value={form.meaning}
           onChange={handleChange}
           placeholder="例: 眠い"
+          className="app-form-input"
         />
-        {errors.meaning && <p style={{ color: "red" }}>{errors.meaning}</p>}
+        {errors.meaning && <p className="app-form-error">{errors.meaning}</p>}
       </div>
 
       {/* カテゴリ */}
-      <div>
+      <div className="app-form-group">
         <label>カテゴリ</label>
         <select
           name="speaker_category_id"
           value={form.speaker_category_id}
           onChange={handleChange}
           disabled={categoriesLoading || hasNoCategories}
+          className="app-form-input"
         >
           <option value="">選択してください</option>
           {categories.map((category) => (
@@ -121,12 +124,12 @@ const ExpressionForm = ({
           ))}
         </select>
         {errors.speaker_category_id && (
-          <p style={{ color: "red" }}>{errors.speaker_category_id}</p>
+          <p className="app-form-error">{errors.speaker_category_id}</p>
         )}
       </div>
 
       {/* 名前 */}
-      <div>
+      <div className="app-form-group">
         <label>名前</label>
         <input
           type="text"
@@ -134,26 +137,28 @@ const ExpressionForm = ({
           value={form.speaker_name}
           onChange={handleChange}
           placeholder="例：정한、IU"
+          className="app-form-input"
         />
         {errors.speaker_name && (
-          <p style={{ color: "red" }}>{errors.speaker_name}</p>
+          <p className="app-form-error">{errors.speaker_name}</p>
         )}
       </div>
 
       {/* 日付 */}
-      <div>
+      <div className="app-form-group">
         <label>日付</label>
         <input
           type="date"
           name="heard_at"
           value={form.heard_at}
           onChange={handleChange}
+          className="app-form-input"
         />
-        {errors.heard_at && <p style={{ color: "red" }}>{errors.heard_at}</p>}
+        {errors.heard_at && <p className="app-form-error">{errors.heard_at}</p>}
       </div>
 
       {/* 場所 */}
-      <div>
+      <div className="app-form-group">
         <label>場所</label>
         <input
           type="text"
@@ -161,25 +166,27 @@ const ExpressionForm = ({
           value={form.place}
           onChange={handleChange}
           placeholder="例：カフェ"
+          className="app-form-input"
         />
-        {errors.place && <p style={{ color: "red" }}>{errors.place}</p>}
+        {errors.place && <p className="app-form-error">{errors.place}</p>}
       </div>
 
       {/* メモ */}
-      <div>
+      <div className="app-form-group">
         <label>メモ</label>
         <textarea
           name="memo"
           value={form.memo}
           onChange={handleChange}
           placeholder="会話の背景や思い出をメモ"
+          className="app-form-input"
         />
-        {errors.memo && <p style={{ color: "red" }}>{errors.memo}</p>}
+        {errors.memo && <p className="app-form-error">{errors.memo}</p>}
       </div>
 
       {/* お気に入り */}
-      <div>
-        <label>
+      <div className="app-form-group">
+        <label className="app-form-checkbox-label">
           <input
             type="checkbox"
             name="is_favorite"
@@ -191,7 +198,11 @@ const ExpressionForm = ({
       </div>
 
       {/* 送信ボタン：送信中 or カテゴリー0件のときは押せない */}
-      <button type="submit" disabled={isSubmitting || hasNoCategories}>
+      <button
+        type="submit"
+        disabled={isSubmitting || hasNoCategories}
+        className="btn btn-primary"
+      >
         {isSubmitting ? `${submitLabel}中...` : submitLabel}
       </button>
     </form>

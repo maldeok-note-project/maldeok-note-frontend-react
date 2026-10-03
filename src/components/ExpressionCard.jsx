@@ -1,5 +1,7 @@
 // 表現カード（一覧画面・お気に入り画面で共通利用）
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import ConfirmModal from "../components/ConfirmModal";
 
 // 枠の色の数（index.css の .card-color-1〜8 と数をそろえる）
 const CARD_COLOR_COUNT = 8;
@@ -24,7 +26,9 @@ const getColorNumber = (categoryId) => {
   return ((categoryId - 1) % CARD_COLOR_COUNT) + 1;
 };
 
+// 表現カードコンポーネント
 const ExpressionCard = ({ expression, onToggleFavorite, onDelete }) => {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const colorNumber = getColorNumber(expression.speaker_category_id);
 
   // カテゴリ名（?. は「なければ undefined にする」書き方。エラー防止）
@@ -71,12 +75,27 @@ const ExpressionCard = ({ expression, onToggleFavorite, onDelete }) => {
         {onDelete && (
           <button
             className="expression-delete-button"
-            onClick={(e) => onDelete(e, expression.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              setShowDeleteModal(true);
+            }}
           >
             削除
           </button>
         )}
       </div>
+
+      {/* 削除確認モーダル */}
+      <ConfirmModal
+        show={showDeleteModal}
+        message="この表現を削除しますか？"
+        onConfirm={(e) => {
+          setShowDeleteModal(false);
+          onDelete(e, expression.id);
+        }}
+        onCancel={() => setShowDeleteModal(false)}
+      />
     </div>
   );
 };

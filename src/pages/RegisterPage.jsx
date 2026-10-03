@@ -72,60 +72,66 @@ const RegidterPage = () => {
       <h1>会員登録</h1>
 
       {/* 全体エラー */}
-      {errors.general && <p style={{ color: "red" }}>{errors.general}</p>}
+      {errors.general && <p className="app-form-error">{errors.general}</p>}
 
       {/* フォーム */}
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="app-form">
+        <div className="app-form-group">
           <label>말덕ネーム</label>
           <input
             type="text"
             name="name"
             value={form.name}
             onChange={handleChange}
+            className="app-form-input"
           />
           {errors.name && (
-            <p style={{ color: "red" }}>말덕ネームは必須です。</p>
+            <p className="app-form-error">말덕ネームは必須です。</p>
           )}
         </div>
 
-        <div>
+        <div className="app-form-group">
           <label>Email</label>
           <input
             type="email"
             name="email"
             value={form.email}
             onChange={handleChange}
+            className="app-form-input"
           />
-          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+          {errors.email && <p className="app-form-error">{errors.email}</p>}
         </div>
 
-        <div>
+        <div className="app-form-group">
           <label>Password</label>
           <input
             type="password"
             name="password"
             value={form.password}
             onChange={handleChange}
+            className="app-form-input"
           />
-          {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
+          {errors.password && (
+            <p className="app-form-error">{errors.password}</p>
+          )}
         </div>
 
-        <div>
+        <div className="app-form-group">
           <label>Password(check)</label>
           <input
             type="password"
             name="password_confirmation"
             value={form.password_confirmation}
             onChange={handleChange}
+            className="app-form-input"
           />
           {errors.password_confirmation && (
-            <p style={{ color: "red" }}>{errors.password_confirmation}</p>
+            <p className="app-form-error">{errors.password_confirmation}</p>
           )}
         </div>
 
         {/* 送信ボタン */}
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" disabled={isLoading} className="btn btn-primary">
           {isLoading ? "登録中..." : "登録する"}
         </button>
       </form>
