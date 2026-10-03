@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import apiClient from "../api/client";
+import ConfirmModal from "../components/ConfirmModal";
 
 // 登録日を読める形にする
 const formatCreatedAt = (isoDateString) => {
@@ -19,6 +20,10 @@ const CategoryListPage = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // 削除確認モーダルの表示状態の箱
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState(null);
 
   const fetchCategories = async () => {
     try {
@@ -45,18 +50,18 @@ const CategoryListPage = () => {
     fetchCategories();
   }, []);
 
-  // カテゴリ削除
-  const handleDelete = async (categoryId) => {
-    // 確認ダイアログ
-    const confirmed = window.confirm("本当に削除しますか？");
+  // 削除ボタンを押した時：ポップアップを表示するだけ
+  const handleDeleteClick = (categoryId) => {
+    setDeleteTargetId(categoryId);
+    setShowDeleteModal(true);
+  };
 
-    // キャンセルされた場合は処理を中断
-    if (!confirmed) {
-      return;
-    }
+  // ポップアップの「削除する」を押した時：実際に削除する
+  const handleConfirmDelete = async () => {
+    setShowDeleteModal(false);
 
     try {
-      await apiClient.delete(`/speaker-categories/${categoryId}`);
+      await apiClient.delete(`/speaker-categories/${deleteTargetId}`);
       // 削除後にカテゴリ一覧を再取得
       await fetchCategories();
     } catch (error) {
@@ -109,10 +114,18 @@ const CategoryListPage = () => {
               登録日: {formatCreatedAt(category.created_at)}
             </p>
             <Link to={`/categories/${category.id}/edit`}>編集</Link>
-            <button onClick={() => handleDelete(category.id)}>削除</button>
+            <button onClick={() => handleDeleteClick(category.id)}>削除</button>
           </div>
         ))}
       </div>
+
+      {/* 削除確認モーダル */}
+      <ConfirmModal
+        show={showDeleteModal}
+        message="本当に削除しますか？"
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setShowDeleteModal(false)}
+      />
     </div>
   );
 };

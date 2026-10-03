@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import apiClient from "../api/client";
 import { toggleFavorite } from "../api/expressionActions";
+import ConfirmModal from "../components/ConfirmModal";
 
 // 日付
 const formatHeardAt = (isoDateString) => {
@@ -25,6 +26,7 @@ const ExpressionDetailPage = () => {
   const [expression, setExpression] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // 画面が表示されたタイミング、もしくは id が変わったタイミングで実行
   useEffect(() => {
@@ -70,16 +72,17 @@ const ExpressionDetailPage = () => {
     }
   };
 
-  // 削除処理
-  const handleDelete = async () => {
-    if (!window.confirm("この表現を削除しますか？")) {
-      return;
-    }
+  // 削除ボタンを押した時：ポップアップを表示するだけ
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  // ポップアップの「削除する」を押した時：実際に削除する
+  const handleConfirmDelete = async () => {
+    setShowDeleteModal(false);
 
     try {
       await apiClient.delete(`/expressions/${id}`);
-
-      // 削除後に一覧ページに遷移
       navigate("/expressions");
     } catch (error) {
       console.error("表現の削除に失敗しました。", error);
@@ -122,17 +125,29 @@ const ExpressionDetailPage = () => {
 
       {expression.memo && <p className="expression-memo">{expression.memo}</p>}
 
-      {/* お気に入り */}
-      <button
-        className="expression-favorite-button"
-        onClick={handleToggleFavorite}
-      >
-        {expression.is_favorite ? "❤" : "♡"}
-      </button>
+      {/* お気に入り・編集・削除 */}
+      <div className="expression-detail-actions">
+        <button
+          className="expression-favorite-button"
+          onClick={handleToggleFavorite}
+        >
+          {expression.is_favorite ? "❤" : "♡"}
+        </button>
 
-      {/* 編集・削除 */}
-      <Link to={`/expressions/${id}/edit`}>編集</Link>
-      <button onClick={handleDelete}>削除</button>
+        <Link
+          to={`/expressions/${id}/edit`}
+          className="expression-detail-edit-button"
+        >
+          編集
+        </Link>
+
+        <button
+          className="expression-delete-button"
+          onClick={handleDeleteClick}
+        >
+          削除
+        </button>
+      </div>
     </div>
   );
 };

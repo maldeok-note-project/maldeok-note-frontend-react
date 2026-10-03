@@ -106,10 +106,10 @@ const CategoryEditPage = () => {
     <div>
       <h1>カテゴリ編集</h1>
 
-      {errors.general && <p style={{ color: "red" }}>{errors.general}</p>}
+      {errors.general && <p className="app-form-error">{errors.general}</p>}
 
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="app-form">
+        <div className="app-form-group">
           <label>カテゴリ名</label>
           <input
             type="text"
@@ -117,12 +117,17 @@ const CategoryEditPage = () => {
             value={form.name}
             onChange={handleChange}
             placeholder="例：SEVENTEEN、先生、친구"
+            className="app-form-input"
           />
 
-          {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
+          {errors.name && <p className="app-form-error">{errors.name}</p>}
         </div>
 
-        <button type="submit" disabled={isSubmitting}>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn btn-primary"
+        >
           {isSubmitting ? "更新中..." : "更新"}
         </button>
       </form>
