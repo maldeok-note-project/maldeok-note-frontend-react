@@ -81,7 +81,12 @@ const CategoryListPage = () => {
   if (categories.length === 0) {
     return (
       <div>
-        まだ登録されたカテゴリがありません。最初のカテゴリを作成してみましょう！
+        <p>
+          まだ登録されたカテゴリがありません。最初のカテゴリを作成してみましょう！
+        </p>
+        <Link to="/categories/create" className="btn btn-primary">
+          新規カテゴリを作成
+        </Link>
       </div>
     );
   }
@@ -89,6 +94,9 @@ const CategoryListPage = () => {
   return (
     <div className="category-list-page">
       <h1>カテゴリ一覧</h1>
+      <Link to="/categories/create" className="btn btn-primary mb-3">
+        新規カテゴリを作成
+      </Link>
 
       <div className="category-card-list">
         {/* バックエンドから返ってきた順番のまま表示 */}
