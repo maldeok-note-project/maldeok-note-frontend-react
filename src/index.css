@@ -1,4 +1,6 @@
-/* ===== クッキーランフォント読み込み（CDN経由） ===== */
+/* ============================================================
+   1. フォント
+   ============================================================ */
 @font-face {
   font-family: "CookieRun";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff")
@@ -23,6 +25,9 @@
   font-display: swap;
 }
 
+/* ============================================================
+   2. カラー変数・全体の基本設定
+   ============================================================ */
 :root {
   /* ===== 말덕노트 カラーパレット ===== */
   --maldeok-pink: #ff6fa5; /* メインピンク：ボタンなど */
@@ -41,68 +46,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== 全体の背景・文字色 ===== */
-body {
-  /* 縦方向グラデーション：上は淡いピンク、下は少し濃いピンク */
-  background: linear-gradient(180deg, #fff5f8 0%, #ffe3ed 50%, #ffd1e3 100%);
-  color: var(--maldeok-dark);
-  margin: 0; /* ブラウザ標準の余白をリセット */
-  min-height: 100vh; /* グラデーションが画面の高さいっぱいに広がるようにする */
-}
-
-/* ===== 見出しのスタイル ===== */
-h1,
-h2 {
-  font-weight: 600;
-  color: var(--maldeok-dark);
-}
-
-h1 {
-  font-family: "CookieRun", "M PLUS Rounded 1c", sans-serif;
-  font-weight: 900; /* 一番太いBlackを使う */
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  color: var(--maldeok-pink);
-}
-
-/* ===== キャッチコピー ===== */
-.catch-copy {
-  color: #e85a90; /* メインピンクより少し濃いめ、締め色寄りのピンク */
-  font-weight: 600;
-}
-
-@media (max-width: 1024px) {
-  h1 {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-
-/* ===== Bootstrapの「primary(青)」をピンクで上書き ===== */
-.btn-primary {
-  background-color: var(--maldeok-pink);
-  border-color: var(--maldeok-pink);
-}
-
-.btn-primary:hover {
-  background-color: #e85a90; /* ホバー時は少し濃くする */
-  border-color: #e85a90;
-}
-
-.btn-outline-primary {
-  color: var(--maldeok-pink);
-  border-color: var(--maldeok-pink);
-}
-
-.btn-outline-primary:hover {
-  background-color: var(--maldeok-pink);
-  border-color: var(--maldeok-pink);
-  color: #fff;
-}
-
-/* ===== 表現カード：カテゴリごとの色（8色パレット） ===== */
-/* --card-color は「このカードの色」を入れる変数。下の .expression-card などで使う */
+/* カードの色パレット（8色）。--card-color を、各カードが、使う */
 .card-color-1 {
   --card-color: #ff6fa5;
 } /* ピンク */
@@ -128,14 +72,75 @@ h1 {
   --card-color: #cfcaca;
 } /* グレー */
 
-/* ===== ページの左右の余白 ===== */
+/* ============================================================
+   3. 全体のレイアウト・見出し
+   ============================================================ */
+body {
+  background: linear-gradient(180deg, #fff5f8 0%, #ffe3ed 50%, #ffd1e3 100%);
+  color: var(--maldeok-dark);
+  margin: 0;
+  min-height: 100vh;
+}
+
+h1,
+h2 {
+  font-weight: 600;
+  color: var(--maldeok-dark);
+}
+
+h1 {
+  font-family: "CookieRun", "M PLUS Rounded 1c", sans-serif;
+  font-weight: 900;
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  color: var(--maldeok-pink);
+}
+
+.catch-copy {
+  color: #e85a90;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+
+/* ============================================================
+   4. ボタンの基本色（Bootstrapの上書き）
+   ============================================================ */
+.btn-primary {
+  background-color: var(--maldeok-pink);
+  border-color: var(--maldeok-pink);
+}
+
+.btn-primary:hover {
+  background-color: #e85a90;
+  border-color: #e85a90;
+}
+
+.btn-outline-primary {
+  color: var(--maldeok-pink);
+  border-color: var(--maldeok-pink);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--maldeok-pink);
+  border-color: var(--maldeok-pink);
+  color: #fff;
+}
+
+/* ============================================================
+   5. 一覧ページ（表現カード）
+   ============================================================ */
 .expression-list-page,
 .favorite-list-page {
   padding: 0 16px 32px;
 }
 
-/* ===== カードを並べるグリッド ===== */
-/* 1枚の最小幅は240px。画面が広いほど列が増え、狭いと1列になる */
 .expression-card-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -143,7 +148,6 @@ h1 {
   margin-top: 24px;
 }
 
-/* ===== カード本体（トレカ風） ===== */
 .expression-card {
   display: flex;
   flex-direction: column;
@@ -158,15 +162,13 @@ h1 {
     box-shadow 0.2s;
 }
 
-/* マウスを乗せたら少し浮く */
 .expression-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }
 
-/* リンクの青い下線を消して、文字色を引き継ぐ */
 .expression-card-link {
-  flex: 1; /* ボタン行を下に押しやる */
+  flex: 1;
   color: inherit;
   text-decoration: none;
 }
@@ -175,8 +177,7 @@ h1 {
   margin: 0 0 8px;
 }
 
-/* カテゴリのタグ */
-.expression-category-tag {
+.expression-card .expression-category-tag {
   display: inline-block;
   margin-bottom: 12px;
   padding: 2px 12px;
@@ -187,38 +188,31 @@ h1 {
   font-weight: 700;
 }
 
-/* 表現（一番目立たせる） */
-.expression-phrase {
+.expression-card .expression-phrase {
   font-size: 22px;
   font-weight: 700;
 }
 
-/* 意味 */
-.expression-meaning {
+.expression-card .expression-meaning {
   font-size: 15px;
 }
 
-/* 誰が言ったか・日付 */
-.expression-speaker-name {
+.expression-card .expression-speaker-name {
   font-size: 14px;
   opacity: 0.8;
 }
 
-.expression-heard-at {
+.expression-card .expression-heard-at {
   font-size: 12px;
   opacity: 0.6;
 }
 
-/* ボタンの行 */
 .expression-card-actions {
   display: flex;
   gap: 8px;
   margin-top: 12px;
 }
 
-/* ===== カード内のボタン ===== */
-
-/* お気に入りボタン（カードと同じ色の丸いボタン） */
 .expression-card .expression-favorite-button {
   padding: 4px 14px;
   background: #fff;
@@ -230,14 +224,12 @@ h1 {
   transition: background 0.2s;
 }
 
-/* マウスを乗せたら、カードの色で塗りつぶす */
 .expression-card .expression-favorite-button:hover {
   background: var(--card-color);
 }
 
-/* 削除ボタン（控えめな文字だけのボタン） */
-.expression-delete-button {
-  margin-left: auto; /* 右端に寄せる */
+.expression-card .expression-delete-button {
+  margin-left: auto;
   padding: 4px 8px;
   background: none;
   border: none;
@@ -247,20 +239,150 @@ h1 {
   transition: color 0.2s;
 }
 
-/* マウスを乗せたら赤くして、消える操作だと伝える */
-.expression-delete-button:hover {
+.expression-card .expression-delete-button:hover {
   color: #e5484d;
   text-decoration: underline;
 }
 
-/* キーボード操作のときの枠（どのボタンにいるか分かるようにする） */
 .expression-card .expression-favorite-button:focus-visible,
 .expression-card .expression-delete-button:focus-visible {
   outline: 2px solid var(--maldeok-pink);
   outline-offset: 2px;
 }
 
-/* ===== 入力フォームの、共通デザイン ===== */
+/* ============================================================
+   6. 表現、詳細ページ
+   ============================================================ */
+.expression-detail-page {
+  max-width: 480px;
+  margin: 24px 0 0;
+  padding: 24px;
+  background: #fff;
+  border: 4px solid var(--card-color, var(--maldeok-pink));
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.expression-detail-back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.expression-detail-page .expression-category-tag {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 2px 12px;
+  background: var(--card-color, var(--maldeok-pink-light));
+  border-radius: 999px;
+  color: var(--maldeok-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.expression-detail-page .expression-phrase {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.expression-detail-page .expression-meaning {
+  font-size: 17px;
+  margin: 0 0 4px;
+}
+
+/* 単語帳らしい、グループの見出し */
+.expression-detail-section-title {
+  margin: 16px 0 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--maldeok-pink-light);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--maldeok-pink);
+}
+
+/* だれが・いつ・どこで、のグループ */
+.expression-detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.expression-detail-meta p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.expression-detail-page .expression-memo {
+  margin: 0;
+  font-size: 14px;
+  color: #5a5555;
+}
+
+.expression-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.expression-detail-page .expression-favorite-button {
+  padding: 6px 16px;
+  background: #fff;
+  border: 2px solid var(--maldeok-pink);
+  border-radius: 999px;
+  color: var(--maldeok-pink);
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.expression-detail-page .expression-favorite-button:hover {
+  background: var(--maldeok-pink);
+  color: #fff;
+}
+
+.expression-detail-edit-button {
+  padding: 6px 16px;
+  background: #fff;
+  border: 2px solid #8a8585;
+  border-radius: 999px;
+  color: var(--maldeok-dark);
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.expression-detail-edit-button:hover {
+  background: #f0f0f0;
+  color: var(--maldeok-dark);
+}
+
+.expression-detail-page .expression-delete-button {
+  padding: 6px 12px;
+  background: none;
+  border: none;
+  color: #8a8585;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.expression-detail-actions .expression-delete-button {
+  margin-left: 0;
+}
+
+.expression-detail-page .expression-delete-button:hover {
+  color: #e5484d;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   7. 入力フォーム（共通）
+   ============================================================ */
 .app-form {
   max-width: 480px;
   margin: 24px 0;
@@ -310,66 +432,4 @@ textarea.app-form-input {
   gap: 8px;
   font-weight: 400;
   cursor: pointer;
-}
-
-/* ===== 詳細ページの、お気に入り・削除ボタン ===== */
-.expression-detail-page .expression-favorite-button {
-  padding: 6px 16px;
-  background: #fff;
-  border: 2px solid var(--maldeok-pink);
-  border-radius: 999px;
-  color: var(--maldeok-pink);
-  font-size: 16px;
-  cursor: pointer;
-  transition:
-    background 0.2s,
-    color 0.2s;
-}
-
-.expression-detail-page .expression-favorite-button:hover {
-  background: var(--maldeok-pink);
-  color: #fff;
-}
-
-.expression-detail-page .expression-delete-button {
-  padding: 6px 12px;
-  background: none;
-  border: none;
-  color: #8a8585;
-  font-size: 14px;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.expression-detail-page .expression-delete-button:hover {
-  color: #e5484d;
-  text-decoration: underline;
-}
-
-/* ===== 詳細ページの、アクションボタンの、行 ===== */
-.expression-detail-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.expression-detail-edit-button {
-  padding: 6px 16px;
-  background: #fff;
-  border: 2px solid #8a8585;
-  border-radius: 999px;
-  color: var(--maldeok-dark);
-  font-size: 14px;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-
-.expression-detail-actions .expression-delete-button {
-  margin-left: 0;
-}
-
-.expression-detail-edit-button:hover {
-  background: #f0f0f0;
-  color: var(--maldeok-dark);
 }
