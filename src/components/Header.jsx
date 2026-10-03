@@ -58,6 +58,7 @@ const Header = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav ms-auto me-auto mb-2 mb-md-0">
+            {/* 記録そのものの操作：一覧・作成 */}
             <li className="nav-item">
               <NavLink
                 to="/expressions"
@@ -70,15 +71,15 @@ const Header = () => {
 
             <li className="nav-item">
               <NavLink
-                to="/favorites"
-                end
+                to="/expressions/create"
                 className={linkClass}
                 onClick={closeMenu}
               >
-                お気に入り
+                作成
               </NavLink>
             </li>
 
+            {/* 記録の裏方設定：カテゴリ */}
             <li className="nav-item">
               <NavLink
                 to="/categories"
@@ -89,13 +90,21 @@ const Header = () => {
               </NavLink>
             </li>
 
+            {/* 自分の記録を振り返る：お気に入り・バッジ */}
             <li className="nav-item">
               <NavLink
-                to="/expressions/create"
+                to="/favorites"
+                end
                 className={linkClass}
                 onClick={closeMenu}
               >
-                作成
+                お気に入り
+              </NavLink>
+            </li>
+
+            <li className="nav-item">
+              <NavLink to="/badges" className={linkClass} onClick={closeMenu}>
+                バッジ
               </NavLink>
             </li>
           </ul>

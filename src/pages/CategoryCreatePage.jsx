@@ -74,11 +74,11 @@ const CategoryCreatePage = () => {
       <h1>カテゴリ作成</h1>
 
       {/* 全体エラー */}
-      {errors.general && <p style={{ color: "red" }}>{errors.general}</p>}
+      {errors.general && <p className="app-form-error">{errors.general}</p>}
 
       {/* 入力フィールド */}
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="app-form">
+        <div className="app-form-group">
           <label>カテゴリ名</label>
           <input
             type="text"
@@ -86,12 +86,13 @@ const CategoryCreatePage = () => {
             value={form.name}
             onChange={handleChange}
             placeholder="例：SEVENTEEN、정한、キムせんせい"
+            className="app-form-input"
           />
-          {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
+          {errors.name && <p className="app-form-error">{errors.name}</p>}
         </div>
 
         {/* 送信ボタン */}
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" disabled={isLoading} className="btn btn-primary">
           {isLoading ? "登録中..." : "登録"}
         </button>
       </form>

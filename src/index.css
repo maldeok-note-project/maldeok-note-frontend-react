@@ -259,3 +259,117 @@ h1 {
   outline: 2px solid var(--maldeok-pink);
   outline-offset: 2px;
 }
+
+/* ===== 入力フォームの、共通デザイン ===== */
+.app-form {
+  max-width: 480px;
+  margin: 24px 0;
+}
+
+.app-form-group {
+  margin-bottom: 20px;
+}
+
+.app-form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--maldeok-dark);
+}
+
+.app-form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid var(--maldeok-pink-light);
+  border-radius: 12px;
+  font-size: 16px;
+  background: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.app-form-input:focus {
+  outline: none;
+  border-color: var(--maldeok-pink);
+}
+
+textarea.app-form-input {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.app-form-error {
+  color: #e5484d;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.app-form-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+/* ===== 詳細ページの、お気に入り・削除ボタン ===== */
+.expression-detail-page .expression-favorite-button {
+  padding: 6px 16px;
+  background: #fff;
+  border: 2px solid var(--maldeok-pink);
+  border-radius: 999px;
+  color: var(--maldeok-pink);
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.expression-detail-page .expression-favorite-button:hover {
+  background: var(--maldeok-pink);
+  color: #fff;
+}
+
+.expression-detail-page .expression-delete-button {
+  padding: 6px 12px;
+  background: none;
+  border: none;
+  color: #8a8585;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.expression-detail-page .expression-delete-button:hover {
+  color: #e5484d;
+  text-decoration: underline;
+}
+
+/* ===== 詳細ページの、アクションボタンの、行 ===== */
+.expression-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.expression-detail-edit-button {
+  padding: 6px 16px;
+  background: #fff;
+  border: 2px solid #8a8585;
+  border-radius: 999px;
+  color: var(--maldeok-dark);
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.expression-detail-actions .expression-delete-button {
+  margin-left: 0;
+}
+
+.expression-detail-edit-button:hover {
+  background: #f0f0f0;
+  color: var(--maldeok-dark);
+}

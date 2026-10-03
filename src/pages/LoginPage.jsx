@@ -64,34 +64,38 @@ const LoginPage = () => {
       <h1>ログイン</h1>
 
       {/* 全体エラー */}
-      {errors.general && <p style={{ color: "red" }}>{errors.general}</p>}
+      {errors.general && <p className="app-form-error">{errors.general}</p>}
 
       {/* フォーム */}
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="app-form">
+        <div className="app-form-group">
           <label>Email</label>
           <input
             type="email"
             name="email"
             value={form.email}
             onChange={handleChange}
+            className="app-form-input"
           />
-          {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+          {errors.email && <p className="app-form-error">{errors.email}</p>}
         </div>
 
-        <div>
+        <div className="app-form-group">
           <label>Password</label>
           <input
             type="password"
             name="password"
             value={form.password}
             onChange={handleChange}
+            className="app-form-input"
           />
-          {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
+          {errors.password && (
+            <p className="app-form-error">{errors.password}</p>
+          )}
         </div>
 
         {/* 送信ボタン */}
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" disabled={isLoading} className="btn btn-primary">
           {isLoading ? "ログイン中..." : "ログイン"}
         </button>
       </form>
